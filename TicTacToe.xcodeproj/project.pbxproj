@@ -16,6 +16,10 @@
 		69EC01BF20949C9E00598878 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69EC01BD20949C9E00598878 /* LaunchScreen.storyboard */; };
 		69EC01CA20949C9E00598878 /* TicTacToeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC01C920949C9E00598878 /* TicTacToeTests.swift */; };
 		69EC01D520949C9E00598878 /* TicTacToeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC01D420949C9E00598878 /* TicTacToeUITests.swift */; };
+		720BF0052094E49B00E3BB83 /* Jogador.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF0042094E49B00E3BB83 /* Jogador.swift */; };
+		720BF0072094E5EF00E3BB83 /* Partida.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF0062094E5EF00E3BB83 /* Partida.swift */; };
+		720BF0092094E91400E3BB83 /* Sala.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF0082094E91400E3BB83 /* Sala.swift */; };
+		720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF00A2094EB2C00E3BB83 /* Jogada.swift */; };
 		89DD4E55FB8B427EF26EC0D7 /* Pods_TicTacToeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540B35240704F0C057EA4569 /* Pods_TicTacToeUITests.framework */; };
 		F374F18130CB0E99655072AA /* Pods_TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B698F2BD567A943FC2F786 /* Pods_TicTacToe.framework */; };
 /* End PBXBuildFile section */
@@ -59,6 +63,10 @@
 		69EC01D020949C9E00598878 /* TicTacToeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TicTacToeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69EC01D420949C9E00598878 /* TicTacToeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicTacToeUITests.swift; sourceTree = "<group>"; };
 		69EC01D620949C9E00598878 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		720BF0042094E49B00E3BB83 /* Jogador.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jogador.swift; sourceTree = "<group>"; };
+		720BF0062094E5EF00E3BB83 /* Partida.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Partida.swift; sourceTree = "<group>"; };
+		720BF0082094E91400E3BB83 /* Sala.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sala.swift; sourceTree = "<group>"; };
+		720BF00A2094EB2C00E3BB83 /* Jogada.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jogada.swift; sourceTree = "<group>"; };
 		924C6EC2116E37873E657642 /* Pods-TicTacToeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF7689A5E8583587272787EA /* Pods-TicTacToeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeUITests/Pods-TicTacToeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +126,10 @@
 			isa = PBXGroup;
 			children = (
 				69BC61D12094B54A00C99E06 /* GoogleService-Info.plist */,
+				720BF00A2094EB2C00E3BB83 /* Jogada.swift */,
+				720BF0082094E91400E3BB83 /* Sala.swift */,
+				720BF0062094E5EF00E3BB83 /* Partida.swift */,
+				720BF0042094E49B00E3BB83 /* Jogador.swift */,
 				69EC01B420949C9C00598878 /* AppDelegate.swift */,
 				69EC01B620949C9C00598878 /* ViewController.swift */,
 				69EC01B820949C9C00598878 /* Main.storyboard */,
@@ -383,6 +395,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				69EC01B720949C9C00598878 /* ViewController.swift in Sources */,
+				720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */,
+				720BF0072094E5EF00E3BB83 /* Partida.swift in Sources */,
+				720BF0052094E49B00E3BB83 /* Jogador.swift in Sources */,
+				720BF0092094E91400E3BB83 /* Sala.swift in Sources */,
 				69EC01B520949C9C00598878 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -557,7 +573,7 @@
 			baseConfigurationReference = 15CB1C68642742679BD0D22A /* Pods-TicTacToe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TicTacToe/Info.plist;
@@ -578,7 +594,7 @@
 			baseConfigurationReference = 35C33C19F8297AB275EB32B6 /* Pods-TicTacToe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = TicTacToe/Info.plist;

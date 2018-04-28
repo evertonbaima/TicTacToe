@@ -21,6 +21,7 @@
 		720BF0092094E91400E3BB83 /* Sala.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF0082094E91400E3BB83 /* Sala.swift */; };
 		720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF00A2094EB2C00E3BB83 /* Jogada.swift */; };
 		89DD4E55FB8B427EF26EC0D7 /* Pods_TicTacToeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540B35240704F0C057EA4569 /* Pods_TicTacToeUITests.framework */; };
+		B175AEF92094F59800EBA9A1 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175AEF82094F59800EBA9A1 /* Game.swift */; };
 		F374F18130CB0E99655072AA /* Pods_TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B698F2BD567A943FC2F786 /* Pods_TicTacToe.framework */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +70,7 @@
 		720BF00A2094EB2C00E3BB83 /* Jogada.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jogada.swift; sourceTree = "<group>"; };
 		924C6EC2116E37873E657642 /* Pods-TicTacToeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF7689A5E8583587272787EA /* Pods-TicTacToeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeUITests/Pods-TicTacToeUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		B175AEF82094F59800EBA9A1 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				69EC01BB20949C9E00598878 /* Assets.xcassets */,
 				69EC01BD20949C9E00598878 /* LaunchScreen.storyboard */,
 				69EC01C020949C9E00598878 /* Info.plist */,
+				B175AEF82094F59800EBA9A1 /* Game.swift */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 			files = (
 				69EC01B720949C9C00598878 /* ViewController.swift in Sources */,
 				720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */,
+				B175AEF92094F59800EBA9A1 /* Game.swift in Sources */,
 				720BF0072094E5EF00E3BB83 /* Partida.swift in Sources */,
 				720BF0052094E49B00E3BB83 /* Jogador.swift in Sources */,
 				720BF0092094E91400E3BB83 /* Sala.swift in Sources */,

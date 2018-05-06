@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2D6F617F20EE8C361948734F /* Pods_TicTacToeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EA2ACA20C852DFDF7F7008 /* Pods_TicTacToeTests.framework */; };
+		69323E742094FCBE00D7A36A /* AlertUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69323E732094FCBE00D7A36A /* AlertUtils.swift */; };
+		69323E792094FF7000D7A36A /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69323E782094FF7000D7A36A /* GameViewController.swift */; };
+		696BD9F4209F62680002E9C3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696BD9F3209F62670002E9C3 /* HomeViewController.swift */; };
+		696BD9F8209F69D10002E9C3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696BD9F7209F69D10002E9C3 /* LoginViewController.swift */; };
+		696BD9FC209F6ABC0002E9C3 /* CadastroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696BD9FB209F6ABC0002E9C3 /* CadastroViewController.swift */; };
 		69BC61D22094B54A00C99E06 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69BC61D12094B54A00C99E06 /* GoogleService-Info.plist */; };
 		69EC01B520949C9C00598878 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC01B420949C9C00598878 /* AppDelegate.swift */; };
 		69EC01B720949C9C00598878 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EC01B620949C9C00598878 /* ViewController.swift */; };
@@ -21,7 +26,6 @@
 		720BF0092094E91400E3BB83 /* Sala.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF0082094E91400E3BB83 /* Sala.swift */; };
 		720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF00A2094EB2C00E3BB83 /* Jogada.swift */; };
 		89DD4E55FB8B427EF26EC0D7 /* Pods_TicTacToeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540B35240704F0C057EA4569 /* Pods_TicTacToeUITests.framework */; };
-		B175AEF92094F59800EBA9A1 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175AEF82094F59800EBA9A1 /* Game.swift */; };
 		F374F18130CB0E99655072AA /* Pods_TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B698F2BD567A943FC2F786 /* Pods_TicTacToe.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +54,11 @@
 		4C08BA12C31CF10C3EDF3F2F /* Pods-TicTacToeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.release.xcconfig"; sourceTree = "<group>"; };
 		540B35240704F0C057EA4569 /* Pods_TicTacToeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicTacToeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58EA2ACA20C852DFDF7F7008 /* Pods_TicTacToeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TicTacToeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69323E732094FCBE00D7A36A /* AlertUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtils.swift; sourceTree = "<group>"; };
+		69323E782094FF7000D7A36A /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		696BD9F3209F62670002E9C3 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		696BD9F7209F69D10002E9C3 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		696BD9FB209F6ABC0002E9C3 /* CadastroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CadastroViewController.swift; sourceTree = "<group>"; };
 		69BC61D12094B54A00C99E06 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		69EC01B120949C9C00598878 /* TicTacToe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TicTacToe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69EC01B420949C9C00598878 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,7 +79,6 @@
 		720BF00A2094EB2C00E3BB83 /* Jogada.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jogada.swift; sourceTree = "<group>"; };
 		924C6EC2116E37873E657642 /* Pods-TicTacToeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF7689A5E8583587272787EA /* Pods-TicTacToeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeUITests/Pods-TicTacToeUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		B175AEF82094F59800EBA9A1 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69323E722094FCA600D7A36A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				69323E732094FCBE00D7A36A /* AlertUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		69323E752094FDB500D7A36A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				696BD9FB209F6ABC0002E9C3 /* CadastroViewController.swift */,
+				696BD9F7209F69D10002E9C3 /* LoginViewController.swift */,
+				696BD9F3209F62670002E9C3 /* HomeViewController.swift */,
+				69323E782094FF7000D7A36A /* GameViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		696BD9F0209F5C610002E9C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				720BF00A2094EB2C00E3BB83 /* Jogada.swift */,
+				720BF0082094E91400E3BB83 /* Sala.swift */,
+				720BF0062094E5EF00E3BB83 /* Partida.swift */,
+				720BF0042094E49B00E3BB83 /* Jogador.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		69EC01A820949C9C00598878 = {
 			isa = PBXGroup;
 			children = (
@@ -127,18 +165,16 @@
 		69EC01B320949C9C00598878 /* TicTacToe */ = {
 			isa = PBXGroup;
 			children = (
+				696BD9F0209F5C610002E9C3 /* Models */,
+				69323E752094FDB500D7A36A /* Controllers */,
+				69323E722094FCA600D7A36A /* Utils */,
 				69BC61D12094B54A00C99E06 /* GoogleService-Info.plist */,
-				720BF00A2094EB2C00E3BB83 /* Jogada.swift */,
-				720BF0082094E91400E3BB83 /* Sala.swift */,
-				720BF0062094E5EF00E3BB83 /* Partida.swift */,
-				720BF0042094E49B00E3BB83 /* Jogador.swift */,
 				69EC01B420949C9C00598878 /* AppDelegate.swift */,
 				69EC01B620949C9C00598878 /* ViewController.swift */,
 				69EC01B820949C9C00598878 /* Main.storyboard */,
 				69EC01BB20949C9E00598878 /* Assets.xcassets */,
 				69EC01BD20949C9E00598878 /* LaunchScreen.storyboard */,
 				69EC01C020949C9E00598878 /* Info.plist */,
-				B175AEF82094F59800EBA9A1 /* Game.swift */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";
@@ -397,13 +433,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69323E792094FF7000D7A36A /* GameViewController.swift in Sources */,
 				69EC01B720949C9C00598878 /* ViewController.swift in Sources */,
 				720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */,
-				B175AEF92094F59800EBA9A1 /* Game.swift in Sources */,
 				720BF0072094E5EF00E3BB83 /* Partida.swift in Sources */,
 				720BF0052094E49B00E3BB83 /* Jogador.swift in Sources */,
+				696BD9F4209F62680002E9C3 /* HomeViewController.swift in Sources */,
 				720BF0092094E91400E3BB83 /* Sala.swift in Sources */,
 				69EC01B520949C9C00598878 /* AppDelegate.swift in Sources */,
+				696BD9F8209F69D10002E9C3 /* LoginViewController.swift in Sources */,
+				69323E742094FCBE00D7A36A /* AlertUtils.swift in Sources */,
+				696BD9FC209F6ABC0002E9C3 /* CadastroViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

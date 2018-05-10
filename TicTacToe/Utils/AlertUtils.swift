@@ -18,4 +18,12 @@ public class AlertUtils {
 
         controller.present(alert, animated: true, completion: nil)
     }
+    
+    public static func mensagemValidacao(titulo:String, mensagem:String,_ controller: UIViewController) {
+        let alerta = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
+        let acaoCancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
+        alerta.addAction(acaoCancelar)
+        controller.present(alerta, animated: true, completion: nil)
+    }
+    
 }

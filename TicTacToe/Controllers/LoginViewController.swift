@@ -7,9 +7,31 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 public class LoginViewController: UIViewController {
     @IBOutlet weak var btnEntrar: UIButton!
+    @IBOutlet weak var email: UITextField!
+    @IBOutlet weak var senha: UITextField!
+    
+    @IBAction func entar(_ sender: Any) {
+        if let emailR = self.email.text {
+            if let senhaR = self.senha.text {
+                let autenticacao = Auth.auth()
+                autenticacao.signIn(withEmail: emailR, password: senhaR) { (usuario, erro) in
+                    if erro == nil {
+                        if usuario == nil {
+                            AlertUtils.mensagemValidacao(titulo: "Erro ao autenticar", mensagem: "\n Problema ao realizar autenticação, tente novamente!", self)
+                        }else {
+                            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                        }
+                    }else {
+                        AlertUtils.mensagemValidacao(titulo: "Dados incorretos", mensagem: "\n Verifique os dados digitados e tente novamente!", self)
+                    }
+                }
+            }
+        }
+    }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -17,8 +39,11 @@ public class LoginViewController: UIViewController {
         btnEntrar.layer.cornerRadius = 15
     }
     
+    public override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }

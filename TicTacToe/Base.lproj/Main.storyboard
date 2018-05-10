@@ -29,7 +29,7 @@
         <!--Jogadores-->
         <scene sceneID="I9z-pk-JrW">
             <objects>
-                <tableViewController title="Jogadores" id="XTu-Yj-780" sceneMemberID="viewController">
+                <tableViewController title="Jogadores" id="XTu-Yj-780" customClass="JogadoresOnlineTableViewController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="O41-yV-6T6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -299,23 +299,23 @@
                                     <segue destination="XTu-Yj-780" kind="show" id="Lrf-74-nqc"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40n-61-Khe">
-                                <rect key="frame" x="107" y="617" width="160" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <segue destination="N7u-RC-Uyr" kind="presentation" id="Vl6-FD-gLh"/>
-                                </connections>
-                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Logo" highlightedImage="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="zer-l5-MZH">
                                 <rect key="frame" x="92" y="110" width="200" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="40n-61-Khe">
+                                <rect key="frame" x="92" y="617" width="200" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Sair">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSair:" destination="Zdw-xN-dws" eventType="touchUpInside" id="Qqe-Ua-WPd"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="AqB-xd-3mj"/>
                     </view>
                     <navigationItem key="navigationItem" title="TicTacToe" id="bu9-ax-EhA">
@@ -324,16 +324,18 @@
                     <connections>
                         <outlet property="btnBuscarPartida" destination="Pdm-C2-rzo" id="maL-tv-2Yd"/>
                         <outlet property="btnHistoricoPartidas" destination="oaZ-ra-jZ5" id="3lV-FJ-ayl"/>
+                        <outlet property="btnSair" destination="40n-61-Khe" id="GGg-dt-kdw"/>
+                        <segue destination="N7u-RC-Uyr" kind="presentation" identifier="redirectLoginSegue" id="qw9-08-bNC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qZh-CB-ljm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-138.40000000000001" y="375.56221889055473"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Histórico-->
         <scene sceneID="PNN-tx-7Ll">
             <objects>
-                <tableViewController id="HUp-1R-ZMa" sceneMemberID="viewController">
+                <tableViewController title="Histórico" id="HUp-1R-ZMa" customClass="HistoricoPartidasTableViewController" customModule="TicTacToe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="nnM-MF-i5e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -414,6 +416,9 @@
                                 <state key="normal" title="Entrar">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="entar:" destination="dBa-aX-IEa" eventType="touchUpInside" id="aEC-zd-GNV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a7P-zk-q8i">
                                 <rect key="frame" x="67" y="432" width="240" height="30"/>
@@ -436,6 +441,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="btnEntrar" destination="d1M-xx-i1n" id="ai7-Tk-QH1"/>
+                        <outlet property="email" destination="oyg-RA-R3b" id="X6C-Ij-Va1"/>
+                        <outlet property="senha" destination="iNi-5f-MQJ" id="DiJ-Gv-ZLJ"/>
+                        <segue destination="Zdw-xN-dws" kind="presentation" identifier="loginSegue" id="uLF-Lm-ga8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x4k-1a-xwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -507,24 +515,32 @@
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBh-zY-p2y">
-                                <rect key="frame" x="67" y="378" width="240" height="30"/>
+                                <rect key="frame" x="16" y="378" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Salvar">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="salvarCadastro:" destination="Ti8-Z5-e3x" eventType="touchUpInside" id="CDr-PX-JCV"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="7em-0W-lrj"/>
                     </view>
                     <connections>
-                        <outlet property="btnSalvarCadastro" destination="hBh-zY-p2y" id="bLN-Os-8cZ"/>
+                        <outlet property="btnSalvarCadastro" destination="hBh-zY-p2y" id="hDc-px-f2C"/>
+                        <outlet property="confirmaSenha" destination="HpF-jP-Wlb" id="uWX-jx-Nuw"/>
+                        <outlet property="email" destination="5tl-YP-5SB" id="Xzu-ZE-7mf"/>
+                        <outlet property="nome" destination="c17-0t-n4c" id="nPR-u7-rpq"/>
+                        <outlet property="senha" destination="Suy-87-t1Y" id="m2Y-NK-fJh"/>
+                        <segue destination="Zdw-xN-dws" kind="presentation" identifier="cadastroSegue" id="b0D-JR-Qco"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hCv-dD-mys" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1567" y="1145"/>
+            <point key="canvasLocation" x="1565.5999999999999" y="1144.6776611694154"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="LdD-el-xIp">
@@ -546,4 +562,8 @@
     <resources>
         <image name="Logo" width="256" height="256"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="qw9-08-bNC"/>
+        <segue reference="b0D-JR-Qco"/>
+    </inferredMetricsTieBreakers>
 </document>

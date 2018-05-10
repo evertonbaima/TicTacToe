@@ -8,8 +8,10 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 public class LoginViewController: UIViewController {
+    var reference:DatabaseReference!
     @IBOutlet weak var btnEntrar: UIButton!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var senha: UITextField!
@@ -24,6 +26,10 @@ public class LoginViewController: UIViewController {
                             AlertUtils.mensagemValidacao(titulo: "Erro ao autenticar", mensagem: "\n Problema ao realizar autenticação, tente novamente!", self)
                         }else {
                             self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                            let emailR = autenticacao.currentUser?.email
+                            let emailB64 = EncodeDecodeUtils.encodeBase64(text: emailR!)
+                            let ref = self.reference.child("jogadores").child(emailB64)
+                            ref.updateChildValues([ "online": "true" ])
                         }
                     }else {
                         AlertUtils.mensagemValidacao(titulo: "Dados incorretos", mensagem: "\n Verifique os dados digitados e tente novamente!", self)
@@ -36,6 +42,7 @@ public class LoginViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.reference = Database.database().reference()
         btnEntrar.layer.cornerRadius = 15
     }
     

@@ -8,14 +8,20 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseDatabase
 
 public class HomeViewController: UIViewController {
     var autenticacao:Auth!
+    var reference:DatabaseReference!
     @IBOutlet weak var btnBuscarPartida: UIButton!
     @IBOutlet weak var btnHistoricoPartidas: UIButton!
     @IBOutlet weak var btnSair: UIButton!
     
     @IBAction func btnSair(_ sender: Any) {
+        let emailR = autenticacao.currentUser?.email
+        let emailB64 = EncodeDecodeUtils.encodeBase64(text: emailR!)
+        let ref = reference.child("jogadores").child(emailB64)
+        ref.updateChildValues([ "online": "false" ])
         do{
             try self.autenticacao.signOut()
             self.performSegue(withIdentifier: "redirectLoginSegue", sender: nil)
@@ -26,6 +32,7 @@ public class HomeViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.reference = Database.database().reference()
         self.autenticacao = Auth.auth()
         autenticacao.addStateDidChangeListener { (autenticacao, usuario) in
             if usuario == nil {
@@ -39,7 +46,7 @@ public class HomeViewController: UIViewController {
     }
     
     public override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     override public func didReceiveMemoryWarning() {

@@ -27,6 +27,7 @@
 		720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF00A2094EB2C00E3BB83 /* Jogada.swift */; };
 		720BF00F20A3E22F00E3BB83 /* JogadoresOnlineTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF00E20A3E22F00E3BB83 /* JogadoresOnlineTableViewController.swift */; };
 		720BF01120A3E31800E3BB83 /* HistoricoPartidasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF01020A3E31800E3BB83 /* HistoricoPartidasTableViewController.swift */; };
+		720BF01320A3EC7E00E3BB83 /* EncodeDecodeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720BF01220A3EC7E00E3BB83 /* EncodeDecodeUtils.swift */; };
 		89DD4E55FB8B427EF26EC0D7 /* Pods_TicTacToeUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540B35240704F0C057EA4569 /* Pods_TicTacToeUITests.framework */; };
 		F374F18130CB0E99655072AA /* Pods_TicTacToe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02B698F2BD567A943FC2F786 /* Pods_TicTacToe.framework */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,7 @@
 		720BF00A2094EB2C00E3BB83 /* Jogada.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Jogada.swift; sourceTree = "<group>"; };
 		720BF00E20A3E22F00E3BB83 /* JogadoresOnlineTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JogadoresOnlineTableViewController.swift; sourceTree = "<group>"; };
 		720BF01020A3E31800E3BB83 /* HistoricoPartidasTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricoPartidasTableViewController.swift; sourceTree = "<group>"; };
+		720BF01220A3EC7E00E3BB83 /* EncodeDecodeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodeDecodeUtils.swift; sourceTree = "<group>"; };
 		924C6EC2116E37873E657642 /* Pods-TicTacToeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeTests/Pods-TicTacToeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AF7689A5E8583587272787EA /* Pods-TicTacToeUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TicTacToeUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TicTacToeUITests/Pods-TicTacToeUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				69323E732094FCBE00D7A36A /* AlertUtils.swift */,
+				720BF01220A3EC7E00E3BB83 /* EncodeDecodeUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				69323E792094FF7000D7A36A /* GameViewController.swift in Sources */,
 				69EC01B720949C9C00598878 /* ViewController.swift in Sources */,
 				720BF00B2094EB2C00E3BB83 /* Jogada.swift in Sources */,
+				720BF01320A3EC7E00E3BB83 /* EncodeDecodeUtils.swift in Sources */,
 				720BF01120A3E31800E3BB83 /* HistoricoPartidasTableViewController.swift in Sources */,
 				720BF0072094E5EF00E3BB83 /* Partida.swift in Sources */,
 				720BF0052094E49B00E3BB83 /* Jogador.swift in Sources */,

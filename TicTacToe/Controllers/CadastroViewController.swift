@@ -33,14 +33,13 @@ public class CadastroViewController: UIViewController {
                                         AlertUtils.mensagemValidacao(titulo: "Erro ao autenticar", mensagem: "\n Problema ao realizar autenticação, tente novamente!", self)
                                     }else {
                                         //AlertUtils.mensagemValidacao(titulo: "Cadastro de usuário", mensagem: "\n Usuário cadastrado com sucesso!", self)
-                                        let emailB64 = self.encodeBase64(text: emailR)
+                                        let emailB64 = EncodeDecodeUtils.encodeBase64(text: emailR)
                                         let jogadores = reference.child("jogadores").child(emailB64)
                                         let usuario = ["email":"\(emailR)",
-                                            "nome":"\(nomeR)",
-                                            "online":"false",
-                                            "id_sala":"",
-                                            "partidas":""
-                                        ]
+                                                       "nome":"\(nomeR)",
+                                                       "online":"true",
+                                                       "id_sala":""
+                                                      ]
                                         jogadores.setValue(usuario)
                                         self.performSegue(withIdentifier: "cadastroSegue", sender: nil)
                                     }
@@ -71,18 +70,11 @@ public class CadastroViewController: UIViewController {
         }
     }
     
-    func encodeBase64(text: String) -> String {
-        let dados = text.data(using: String.Encoding.utf8)
-        let dadosB64 = dados!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        
-        return dadosB64
-    }
-    
-//    func mensagemValidacao(titulo:String, mensagem:String) {
-//        let alerta = UIAlertController(title: titulo, message: mensagem, preferredStyle: .alert)
-//        let acaoCancelar = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
-//        alerta.addAction(acaoCancelar)
-//        present(alerta, animated: true, completion: nil)
+//    func encodeBase64(text: String) -> String {
+//        let dados = text.data(using: String.Encoding.utf8)
+//        let dadosB64 = dados!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+//
+//        return dadosB64
 //    }
     
     override public func viewDidLoad() {

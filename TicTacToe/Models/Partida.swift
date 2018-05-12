@@ -9,11 +9,11 @@
 import Foundation
 
 class Partida {
-    var data:Date
-    var idOponente:String
-    var resultado:Character // V - vitoria D - derrota E - empate
+    var data: Date?
+    var idOponente: String
+    var resultado: String // V - vitoria D - derrota E - empate
     
-    init(data:Date, idOponente:String, resultado:Character) {
+    init(data: Date?, idOponente: String, resultado: String) {
         self.data = data
         self.idOponente = idOponente
         self.resultado = resultado

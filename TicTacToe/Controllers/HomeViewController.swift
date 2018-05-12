@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseDatabase
+import UserNotifications
 
 public class HomeViewController: UIViewController {
     var autenticacao:Auth!
@@ -24,11 +25,13 @@ public class HomeViewController: UIViewController {
         ref.updateChildValues([ "online": "false" ])
         do{
             try self.autenticacao.signOut()
-            self.performSegue(withIdentifier: "redirectLoginSegue", sender: nil)
+            //self.performSegue(withIdentifier: "redirectLoginSegue", sender: nil)
+            dismiss(animated: true, completion: nil)
         }catch {
             print("Erro ao deslogar usuario")
         }
     }
+    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +46,15 @@ public class HomeViewController: UIViewController {
         btnBuscarPartida.layer.cornerRadius = 15
         btnHistoricoPartidas.layer.cornerRadius = 15
         btnSair.layer.cornerRadius = 15
+        
+        // notification
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
+            if error != nil {
+                print("Authorization unseccesfull")
+            }else {
+                print("Authorization succesfull")
+            }
+        }
     }
     
     public override func viewWillAppear(_ animated: Bool) {

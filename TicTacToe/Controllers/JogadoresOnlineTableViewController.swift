@@ -9,12 +9,13 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
+import UserNotifications
 
 class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDelegate {
-    
-    let jogadores = ["Player 1","Player 2","Teste"]
+
     var searchActive:Bool = false
     var filtered:[Jogador] = []
+    var sala:[Sala] = []
     var jogadoresOnline:[Jogador] = []
     var autenticacao:Auth!
     var reference:DatabaseReference!
@@ -51,14 +52,23 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
                     if let idSala = dados!["id_sala"] {
                         if let nome = dados!["nome"] {
                             if let online = dados!["online"] {
-                                if (online as! String) == "true" && (email as! String) != userLogado {
+                                if (online as! String) == "true" && (email as! String) != userLogado && (idSala as! String) == "" {
                                     let emailB64 = EncodeDecodeUtils.encodeBase64(text: email as! String)
                                     let jogador = Jogador(id: emailB64,
                                                           nome: nome as! String,
                                                           online: true,
-                                                          partidas: [Partida]() ,
+                                                          partidas: [Partida](),
                                                           idSala: idSala as! String)
                                     self.jogadoresOnline.append(jogador)
+                                }else if (idSala as! String) != "" && (email as! String) == userLogado {
+                                    let alert = UIAlertController(title: "Convite para jogar \n TIC TAC TOE", message: "\n Deseja jogar uma partida de TIC TAC TOE com o jogador \(nome)?", preferredStyle: .alert)
+                                    alert.addAction(UIAlertAction(title: "Sim", style: .default, handler: { action in
+                                        print("aceitou convite")
+                                    }))
+                                    alert.addAction(UIAlertAction(title: "Não", style: .cancel, handler: { action in
+                                        print("não aceitou convite")
+                                    }))
+                                    self.present(alert, animated: true)
                                 }
                             }
                         }
@@ -135,8 +145,51 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print(jogadores[indexPath.row])
-        self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+        let jogador:Jogador
+        if(searchActive){
+            jogador = self.filtered[indexPath.row]
+            print(jogador.nome)
+        } else {
+            jogador = self.jogadoresOnline[indexPath.row]
+            print(jogador.nome)
+        }
+        let userLogado = autenticacao.currentUser?.email;
+        let emailB64UserLogado = EncodeDecodeUtils.encodeBase64(text: userLogado!)
+        let emailJogador2B64 = jogador.id
+        let salas = self.reference.child("salas").childByAutoId()
+        let idSala = salas.key
+        let sala = [ "id_jogador1": emailB64UserLogado,
+                     "id_jogador2": emailJogador2B64
+                   ]
+        salas.setValue(sala)
+        
+        let user = self.reference.child("jogadores").child(emailJogador2B64)
+        user.updateChildValues(["id_sala" : idSala])
+        
+        //self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+        //timedNotifications(inSeconds: 3) { (success) in
+        //    if success {
+        //        print("Successfully notification")
+        //    }
+        //}
+    }
+    
+    func timedNotifications(inSeconds:TimeInterval, completion:@escaping (_ Success:Bool) -> ()) {
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
+        let content = UNMutableNotificationContent()
+        content.title = "Teste title"
+        content.subtitle = "Teste subtitle"
+        content.body = "Teste body content"
+        let request = UNNotificationRequest(identifier: "customNotification", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if error != nil {
+                completion(false)
+                print("Erro ao agendar \(request.identifier): \(String(describing: error))")
+            }else {
+                completion(true)
+                print("Notificação \(request.identifier) agendada.")
+            }
+        }
     }
     
     /*

@@ -32,7 +32,6 @@ public class CadastroViewController: UIViewController {
                                     if usuario == nil {
                                         AlertUtils.mensagemValidacao(titulo: "Erro ao autenticar", mensagem: "\n Problema ao realizar autenticação, tente novamente!", self)
                                     }else {
-                                        //AlertUtils.mensagemValidacao(titulo: "Cadastro de usuário", mensagem: "\n Usuário cadastrado com sucesso!", self)
                                         let emailB64 = EncodeDecodeUtils.encodeBase64(text: emailR)
                                         let jogadores = reference.child("jogadores").child(emailB64)
                                         let usuario = ["email":"\(emailR)",

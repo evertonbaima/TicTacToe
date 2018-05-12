@@ -9,14 +9,21 @@
 import UIKit
 
 public class AlertUtils {
-    public static func victoryAlert(_ controller: UIViewController) {
-        let alert = UIAlertController(title: "Blá", message: "Yoooooow!", preferredStyle: .alert)
+    public static func victoryAlert(status: String, nomeGanhador: String, _ controller: UIViewController) {
+        let alert: UIAlertController?
+        
+        if status == "X" || status == "O" {
+            alert = UIAlertController(title: "Vitória", message: "Jogador \(nomeGanhador) ganhou a partida", preferredStyle: .alert)
+        }else {
+            alert = UIAlertController(title: "Empate", message: "A partida foi empate", preferredStyle: .alert)
+        }
+        alert?.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: { action in
+            controller.dismiss(animated: true, completion: nil)
+        }))
 
-        alert.view.tintColor = UIColor.white
-        alert.view.backgroundColor = UIColor.black
-        alert.view.layer.cornerRadius = 25
+        alert?.view.layer.cornerRadius = 25
 
-        controller.present(alert, animated: true, completion: nil)
+        controller.present(alert!, animated: true, completion: nil)
     }
     
     public static func mensagemValidacao(titulo:String, mensagem:String,_ controller: UIViewController) {

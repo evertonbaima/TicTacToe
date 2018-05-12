@@ -52,9 +52,9 @@ public class Game {
             }
             
             if(k % 2 == 0) {
-                tttMatrix[posicao] = "O"
-            } else {
                 tttMatrix[posicao] = "X"
+            } else {
+                tttMatrix[posicao] = "O"
             }
         }
         

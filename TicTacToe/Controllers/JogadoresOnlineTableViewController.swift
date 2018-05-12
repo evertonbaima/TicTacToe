@@ -61,9 +61,10 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
                                                           idSala: idSala as! String)
                                     self.jogadoresOnline.append(jogador)
                                 }else if (idSala as! String) != "" && (email as! String) == userLogado {
-                                    let alert = UIAlertController(title: "Convite para jogar \n TIC TAC TOE", message: "\n Deseja jogar uma partida de TIC TAC TOE com o jogador \(nome)?", preferredStyle: .alert)
+                                    let alert = UIAlertController(title: "Convite para jogar \n TIC TAC TOE", message: "\n Deseja jogar uma partida de TIC TAC TOE ?", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "Sim", style: .default, handler: { action in
                                         print("aceitou convite")
+                                        self.aceitarConviteJogar(idSala: idSala as! String)
                                     }))
                                     alert.addAction(UIAlertAction(title: "Não", style: .cancel, handler: { action in
                                         print("não aceitou convite")
@@ -77,6 +78,17 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
             }
             self.tableView.reloadData()
         }
+    }
+    
+    func aceitarConviteJogar(idSala:String) {
+        self.reference.child("salas/\(idSala)").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let item = snapshot.value as? NSDictionary {
+                if let idJogador1 = item["id_jogador1"] {
+                    self.reference.child("jogadores/\(idJogador1)/id_sala").setValue(idSala)
+                    self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+                }
+            }
+        })
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -162,17 +174,19 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
                      "id_jogador2": emailJogador2B64
                    ]
         salas.setValue(sala)
-        
         let user = self.reference.child("jogadores").child(emailJogador2B64)
         user.updateChildValues(["id_sala" : idSala])
         
-        //self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
-        //timedNotifications(inSeconds: 3) { (success) in
-        //    if success {
-        //        print("Successfully notification")
-        //    }
-        //}
+        self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+        
     }
+    
+    // agenda notificacao
+    //timedNotifications(inSeconds: 3) { (success) in
+    //    if success {
+    //        print("Successfully notification")
+    //    }
+    //}
     
     func timedNotifications(inSeconds:TimeInterval, completion:@escaping (_ Success:Bool) -> ()) {
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: inSeconds, repeats: false)
@@ -191,40 +205,5 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
             }
         }
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
 }

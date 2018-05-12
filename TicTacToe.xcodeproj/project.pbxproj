@@ -180,13 +180,13 @@
 				69323E752094FDB500D7A36A /* Controllers */,
 				69323E722094FCA600D7A36A /* Utils */,
 				69BC61D12094B54A00C99E06 /* GoogleService-Info.plist */,
+				69C21B2620A6641E00753DF6 /* Game.swift */,
 				69EC01B420949C9C00598878 /* AppDelegate.swift */,
 				69EC01B620949C9C00598878 /* ViewController.swift */,
 				69EC01B820949C9C00598878 /* Main.storyboard */,
 				69EC01BB20949C9E00598878 /* Assets.xcassets */,
 				69EC01BD20949C9E00598878 /* LaunchScreen.storyboard */,
 				69EC01C020949C9E00598878 /* Info.plist */,
-				69C21B2620A6641E00753DF6 /* Game.swift */,
 			);
 			path = TicTacToe;
 			sourceTree = "<group>";

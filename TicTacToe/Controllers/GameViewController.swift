@@ -18,17 +18,24 @@ public class GameViewContoller: UIViewController {
     @IBOutlet weak var btn20: UIButton!
     @IBOutlet weak var btn21: UIButton!
     @IBOutlet weak var btn22: UIButton!
+    @IBOutlet weak var nomeJogador1: UILabel!
+    @IBOutlet weak var nomeJogador2: UILabel!
+    @IBOutlet weak var nomeJogadorVez: UILabel!
+    @IBOutlet weak var nomeJogadorVencedor: UILabel!
     
+    private var jogadas:[Jogada] = []
     private var game = [[UIButton]]()
-    private var play: Int = 1
-    
-    @IBAction func customAlert(_ sender: Any) {
-        AlertUtils.victoryAlert(self)
-    }
+    private var play: Int = 0
+    private let jogador1 = "Player 1"
+    private let jogador2 = "Player 2"
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.nomeJogador1.text = jogador1
+        self.nomeJogador2.text = jogador2
+        self.nomeJogadorVez.text = jogador1
+            
         game.append([btn00, btn01, btn02])
         game.append([btn10, btn11, btn12])
         game.append([btn20, btn21, btn22])
@@ -53,17 +60,66 @@ public class GameViewContoller: UIViewController {
     
     @objc func buttonClick(sender: UIButton!) {
         let title = sender.title(for: .normal)
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.zzz'Z'"
+        print(date)
+        //let currentDate = formatter.string(from: date)
+        var jogada:Jogada? = nil
         
         if (title == "X" || title == "O") {
             return
         }
         
+        var tupla:(Int,Int)
+        switch (sender as UIButton).tag {
+            case 0:
+                tupla = (0, 0)
+            case 1:
+                tupla = (0, 1)
+            case 2:
+                tupla = (0, 2)
+            case 3:
+                tupla = (1, 0)
+            case 4:
+                tupla = (1, 1)
+            case 5:
+                tupla = (1, 2)
+            case 6:
+                tupla = (2, 0)
+            case 7:
+                tupla = (2, 1)
+            case 8:
+                tupla = (2, 2)
+            default:
+                tupla = (-1, -1)
+        }
+        print(tupla)
+        
         if (play % 2 == 0) {
             sender.setTitleColor(.red, for: .normal)
             sender.setTitle("X", for: .normal)
+            self.nomeJogadorVez.text = self.nomeJogador2.text
+            jogada = Jogada(data: date, jogada: tupla, idJogador: self.nomeJogador1.text!)
         } else {
             sender.setTitleColor(.blue, for: .normal)
             sender.setTitle("O", for: .normal)
+            self.nomeJogadorVez.text = self.nomeJogador1.text
+            jogada = Jogada(data: date, jogada: tupla, idJogador: self.nomeJogador1.text!)
+        }
+        jogadas.append(jogada!)
+        
+        let statusPartida = Game.verificarStatusDeJogo(jogadas)
+        print(statusPartida)
+        if statusPartida == "X" {
+            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.jogador1, self)
+            self.nomeJogadorVencedor.text = "\(self.jogador1) WINS"
+        }else if statusPartida == "O" {
+            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.jogador2, self)
+            self.nomeJogadorVencedor.text = "\(self.jogador2) WINS"
+        }else if statusPartida == "E" {
+            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.jogador1, self)
+            self.nomeJogadorVencedor.text = "Empate"
         }
         
         play += 1

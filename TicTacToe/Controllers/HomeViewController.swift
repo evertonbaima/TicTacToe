@@ -37,6 +37,7 @@ public class HomeViewController: UIViewController {
         
         self.reference = Database.database().reference()
         self.autenticacao = Auth.auth()
+        //print(autenticacao.currentUser?.email as Any)
         autenticacao.addStateDidChangeListener { (autenticacao, usuario) in
             if usuario == nil {
                 self.performSegue(withIdentifier: "redirectLoginSegue", sender: nil)

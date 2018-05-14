@@ -19,6 +19,7 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
     var jogadoresOnline:[Jogador] = []
     var autenticacao:Auth!
     var reference:DatabaseReference!
+    var enviouConviteJogar:Bool = false
     @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
@@ -30,6 +31,7 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
     
     override func viewDidAppear(_ animated: Bool) {
         self.atualizaJogadores()
+        self.aguardaRetornoConviteJogar()
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
@@ -60,14 +62,13 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
                                                           partidas: [Partida](),
                                                           idSala: idSala as! String)
                                     self.jogadoresOnline.append(jogador)
-                                }else if (idSala as! String) != "" && (email as! String) == userLogado {
+                                }else if (idSala as! String) != "" && (email as! String) == userLogado && !self.enviouConviteJogar {
                                     let alert = UIAlertController(title: "Convite para jogar \n TIC TAC TOE", message: "\n Deseja jogar uma partida de TIC TAC TOE ?", preferredStyle: .alert)
                                     alert.addAction(UIAlertAction(title: "Sim", style: .default, handler: { action in
-                                        print("aceitou convite")
                                         self.aceitarConviteJogar(idSala: idSala as! String)
                                     }))
                                     alert.addAction(UIAlertAction(title: "Não", style: .cancel, handler: { action in
-                                        print("não aceitou convite")
+                                        self.naoAceitarConviteJogar(idSala: idSala as! String)
                                     }))
                                     self.present(alert, animated: true)
                                 }
@@ -80,12 +81,39 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
         }
     }
     
+    func aguardaRetornoConviteJogar() {
+        let userLogado = autenticacao.currentUser?.email;
+        let emailB64UserLogado = EncodeDecodeUtils.encodeBase64(text: userLogado!)
+        let ref = self.reference.child("jogadores/\(emailB64UserLogado)")
+        ref.observe(.value) { (snapshot) in
+            if let item = snapshot.value as? NSDictionary {
+                if (item["id_sala"] as! String) != "" && (item["email"] as! String) == userLogado && self.enviouConviteJogar{
+                    self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+                }else {
+                    print("Nao faz nada")
+                }
+            }
+        }
+    }
+    
     func aceitarConviteJogar(idSala:String) {
         self.reference.child("salas/\(idSala)").observeSingleEvent(of: .value, with: { (snapshot) in
             if let item = snapshot.value as? NSDictionary {
                 if let idJogador1 = item["id_jogador1"] {
                     self.reference.child("jogadores/\(idJogador1)/id_sala").setValue(idSala)
                     self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+                }
+            }
+        })
+    }
+    
+    func naoAceitarConviteJogar(idSala:String) {
+        self.reference.child("salas/\(idSala)").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let item = snapshot.value as? NSDictionary {
+                if let idJogador2 = item["id_jogador2"] {
+                    self.reference.child("salas/\(idSala)").removeValue()
+                    self.reference.child("jogadores/\(idJogador2)").updateChildValues(["id_sala" : ""])
+                    self.enviouConviteJogar = false
                 }
             }
         })
@@ -177,7 +205,7 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
         let user = self.reference.child("jogadores").child(emailJogador2B64)
         user.updateChildValues(["id_sala" : idSala])
         
-        self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+        self.enviouConviteJogar = true
         
     }
     

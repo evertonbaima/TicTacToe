@@ -87,8 +87,14 @@ public class GameViewContoller: UIViewController {
         self.reference.child("/salas/\(self.idSala)/jogadas").observeSingleEvent(of: .value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 let c = child.value as! NSDictionary
-                self.jogadas.append(Jogada(data: self.stringToDatetime(c["data"] as! String)!, jogada: c["jogada"] as! (Int,Int), idJogador: c["id_jogador"] as! String))
-                print(self.jogadas)
+                if let data = self.stringToDatetime(c["data"] as! String) {
+                    if let tupla:(Int,Int) = c["jogada"] as? (Int,Int) {
+                        if let idPlayer = c["id_jogador"] {
+                            self.jogadas.append(Jogada(data: data, jogada: tupla, idJogador: idPlayer as! String))
+                            print(self.jogadas)
+                        }
+                    }
+                }
             }
         }
     }
@@ -153,7 +159,7 @@ public class GameViewContoller: UIViewController {
             self.nomeJogadorVez.text = self.nomeJogador2.text
             self.disableButton()
             self.nomeJogadorVencedor.text = "AGUARDE..."
-            jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","idJogador":"\(self.jogador1)" ]
+            jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","id_jogador":"\(self.jogador1)" ]
             jogada2 = (Jogada(data: date, jogada: tupla, idJogador: self.jogador1))
             let ref = reference.child("salas").child("\(idSala)").child("jogadas").child("\(jogadas.count)")
             ref.setValue(jogada)
@@ -163,7 +169,7 @@ public class GameViewContoller: UIViewController {
             self.nomeJogadorVez.text = self.nomeJogador1.text
             self.disableButton()
             self.nomeJogadorVencedor.text = "AGUARDE..."
-            jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","idJogador":"\(self.jogador2)" ]
+            jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","id_jogador":"\(self.jogador2)" ]
             jogada2 = (Jogada(data: date, jogada: tupla, idJogador: self.jogador2))
             let ref = reference.child("salas").child("\(idSala)").child("jogadas").child("\(jogadas.count)")
             ref.setValue(jogada)

@@ -88,10 +88,18 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
         ref.observe(.value) { (snapshot) in
             if let item = snapshot.value as? NSDictionary {
                 if (item["id_sala"] as! String) != "" && (item["email"] as! String) == userLogado && self.enviouConviteJogar{
-                    self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
-                }else {
-                    print("Nao faz nada")
-                }
+                    let idSala = item["id_sala"] as! String
+                    self.reference.child("salas/\(idSala)").observeSingleEvent(of: .value, with: { (snapshot) in
+                        if let item = snapshot.value as? NSDictionary {
+                            if item["id_jogador1"] != nil {
+                                let item = [ "id_sala":idSala, "id_jogador1":item["id_jogador1"], "id_jogador2":item["id_jogador2"] ]
+                                self.performSegue(withIdentifier: "inicarJogoSegue", sender: item)
+                            }
+                        }
+                    })
+                }//else {
+                    //print("Nao faz nada")
+                //}
             }
         }
     }
@@ -101,7 +109,8 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
             if let item = snapshot.value as? NSDictionary {
                 if let idJogador1 = item["id_jogador1"] {
                     self.reference.child("jogadores/\(idJogador1)/id_sala").setValue(idSala)
-                    self.performSegue(withIdentifier: "inicarJogoSegue", sender: nil)
+                    let item = [ "id_sala":idSala, "id_jogador1":item["id_jogador1"], "id_jogador2":item["id_jogador2"] ]
+                    self.performSegue(withIdentifier: "inicarJogoSegue", sender: item)
                 }
             }
         })
@@ -117,6 +126,17 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
                 }
             }
         })
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "inicarJogoSegue" {
+            let DestViewController : GameViewContoller = segue.destination as! GameViewContoller
+            if let sala:Dictionary<String,String> = sender as? Dictionary {
+                DestViewController.idSala     = sala["id_sala"]!
+                DestViewController.idjogador1 = sala["id_jogador1"]!
+                DestViewController.idjogador2 = sala["id_jogador2"]!
+            }
+        }
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -188,10 +208,8 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
         let jogador:Jogador
         if(searchActive){
             jogador = self.filtered[indexPath.row]
-            print(jogador.nome)
         } else {
             jogador = self.jogadoresOnline[indexPath.row]
-            print(jogador.nome)
         }
         let userLogado = autenticacao.currentUser?.email;
         let emailB64UserLogado = EncodeDecodeUtils.encodeBase64(text: userLogado!)
@@ -201,6 +219,7 @@ class JogadoresOnlineTableViewController: UITableViewController, UISearchBarDele
         let sala = [ "id_jogador1": emailB64UserLogado,
                      "id_jogador2": emailJogador2B64
                    ]
+        //sala = Sala(idSala: idSala, jogadas: [Jogada](), idJogador1: emailB64UserLogado, idJogador2: emailJogador2B64)
         salas.setValue(sala)
         let user = self.reference.child("jogadores").child(emailJogador2B64)
         user.updateChildValues(["id_sala" : idSala])

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 public class GameViewContoller: UIViewController {
     @IBOutlet weak var btn00: UIButton!
@@ -26,16 +28,27 @@ public class GameViewContoller: UIViewController {
     private var jogadas:[Jogada] = []
     private var game = [[UIButton]]()
     private var play: Int = 0
-    private let jogador1 = "Player 1"
-    private let jogador2 = "Player 2"
+    public var idSala = String()
+    public var idjogador1 = String()
+    public var idjogador2 = String()
+    private var jogador1 = String()
+    private var jogador2 = String()
+    private var reference:DatabaseReference!
+    private var auth:Auth!
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        self.reference = Database.database().reference()
+        self.auth = Auth.auth()
+    
+        jogador1 = idjogador1
+        jogador2 = idjogador2
+        
         self.nomeJogador1.text = jogador1
         self.nomeJogador2.text = jogador2
         self.nomeJogadorVez.text = jogador1
-            
+        
         game.append([btn00, btn01, btn02])
         game.append([btn10, btn11, btn12])
         game.append([btn20, btn21, btn22])
@@ -47,10 +60,14 @@ public class GameViewContoller: UIViewController {
                 game[i][j].layer.cornerRadius = 10
                 game[i][j].layer.borderWidth = 3
                 game[i][j].layer.borderColor = UIColor.black.cgColor
-                
                 game[i][j].addTarget(self, action: #selector(self.buttonClick), for: .touchUpInside)
             }
         }
+    }
+    
+    public override func viewDidAppear(_ animated: Bool) {
+        atualizaJogada()
+        indentifierPlayer2()
     }
     
     override public func didReceiveMemoryWarning() {
@@ -58,14 +75,48 @@ public class GameViewContoller: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func indentifierPlayer2() {
+        let emailB64 = EncodeDecodeUtils.encodeBase64(text: (self.auth.currentUser?.email)!)
+        if emailB64 == idjogador2 {
+            self.play = 1
+        }
+    }
+    
+    func atualizaJogada() {
+        self.jogadas.removeAll()
+        self.reference.child("/salas/\(self.idSala)/jogadas").observeSingleEvent(of: .value) { (snapshot) in
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                let c = child.value as! NSDictionary
+                self.jogadas.append(Jogada(data: self.stringToDatetime(c["data"] as! String)!, jogada: c["jogada"] as! (Int,Int), idJogador: c["id_jogador"] as! String))
+                print(self.jogadas)
+            }
+        }
+    }
+    
+    func disableButton() {
+        for i in 0...(game.count - 1) {
+            for j in 0...(game[i].count - 1) {
+                game[i][j].isEnabled = false
+            }
+        }
+    }
+    
+    private func stringToDatetime(_ date: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        
+        return formatter.date(from: date)
+    }
+    
     @objc func buttonClick(sender: UIButton!) {
         let title = sender.title(for: .normal)
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.zzz'Z'"
-        print(date)
-        //let currentDate = formatter.string(from: date)
-        var jogada:Jogada? = nil
+        let currentDate = formatter.string(from: date)
+        
+        var jogada: Dictionary<String,String> = [:]
+        var jogada2:Jogada? = nil
         
         if (title == "X" || title == "O") {
             return
@@ -94,20 +145,30 @@ public class GameViewContoller: UIViewController {
             default:
                 tupla = (-1, -1)
         }
-        print(tupla)
+        //print(tupla)
         
         if (play % 2 == 0) {
             sender.setTitleColor(.red, for: .normal)
             sender.setTitle("X", for: .normal)
             self.nomeJogadorVez.text = self.nomeJogador2.text
-            jogada = Jogada(data: date, jogada: tupla, idJogador: self.nomeJogador1.text!)
+            self.disableButton()
+            self.nomeJogadorVencedor.text = "AGUARDE..."
+            jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","idJogador":"\(self.jogador1)" ]
+            jogada2 = (Jogada(data: date, jogada: tupla, idJogador: self.jogador1))
+            let ref = reference.child("salas").child("\(idSala)").child("jogadas").child("\(jogadas.count)")
+            ref.setValue(jogada)
         } else {
             sender.setTitleColor(.blue, for: .normal)
             sender.setTitle("O", for: .normal)
             self.nomeJogadorVez.text = self.nomeJogador1.text
-            jogada = Jogada(data: date, jogada: tupla, idJogador: self.nomeJogador1.text!)
+            self.disableButton()
+            self.nomeJogadorVencedor.text = "AGUARDE..."
+            jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","idJogador":"\(self.jogador2)" ]
+            jogada2 = (Jogada(data: date, jogada: tupla, idJogador: self.jogador2))
+            let ref = reference.child("salas").child("\(idSala)").child("jogadas").child("\(jogadas.count)")
+            ref.setValue(jogada)
         }
-        jogadas.append(jogada!)
+        jogadas.append(jogada2!)
         
         let statusPartida = Game.verificarStatusDeJogo(jogadas)
         print(statusPartida)

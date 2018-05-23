@@ -521,7 +521,6 @@
         <image name="Logo" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qw9-08-bNC"/>
         <segue reference="uLF-Lm-ga8"/>
     </inferredMetricsTieBreakers>
 </document>

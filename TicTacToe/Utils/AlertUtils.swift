@@ -17,7 +17,7 @@ public class AlertUtils {
         }else {
             alert = UIAlertController(title: "Empate", message: "A partida foi empate", preferredStyle: .alert)
         }
-        alert?.addAction(UIAlertAction(title: "Cancelar", style: .cancel, handler: { action in
+        alert?.addAction(UIAlertAction(title: "Confirmar", style: .default, handler: { action in
             controller.dismiss(animated: true, completion: nil)
         }))
 

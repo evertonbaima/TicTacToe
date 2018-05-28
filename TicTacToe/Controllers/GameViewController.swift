@@ -41,13 +41,10 @@ public class GameViewContoller: UIViewController {
         
         self.reference = Database.database().reference()
         self.auth = Auth.auth()
-    
+        self.verificaNomesPlayers()
+        
         jogador1 = idjogador1
         jogador2 = idjogador2
-        
-        self.nomeJogador1.text = jogador1
-        self.nomeJogador2.text = jogador2
-        self.nomeJogadorVez.text = jogador1
         
         game.append([btn00, btn01, btn02])
         game.append([btn10, btn11, btn12])
@@ -84,14 +81,54 @@ public class GameViewContoller: UIViewController {
     
     func atualizaJogada() {
         self.jogadas.removeAll()
-        self.reference.child("/salas/\(self.idSala)/jogadas").observeSingleEvent(of: .value) { (snapshot) in
+        self.reference.child("/salas/\(self.idSala)/jogadas").observe(.value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 let c = child.value as! NSDictionary
-                if let data = self.stringToDatetime(c["data"] as! String) {
-                    if let tupla:(Int,Int) = c["jogada"] as? (Int,Int) {
+                if let data = c["data"] {
+                    if let tupla = c["jogada"] {
+                        let resTuple = self.convertTuple(tupla as! String)
                         if let idPlayer = c["id_jogador"] {
-                            self.jogadas.append(Jogada(data: data, jogada: tupla, idJogador: idPlayer as! String))
-                            print(self.jogadas)
+                            self.jogadas.append(Jogada(data: data as! String, jogada: resTuple, idJogador: idPlayer as! String))
+                            self.verificaClick()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func verificaNomesPlayers() {
+        self.reference.child("/jogadores/\(idjogador1)").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let c = snapshot.value as? NSDictionary {
+                self.nomeJogador1.text = (c["nome"] as! String)
+                self.nomeJogadorVez.text = (c["nome"] as! String)
+            }
+        })
+        
+        self.reference.child("/jogadores/\(idjogador2)").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let c = snapshot.value as? NSDictionary {
+                self.nomeJogador2.text = (c["nome"] as! String)
+            }
+        })
+    }
+    
+    func convertTuple(_ string: String) -> (Int,Int) {
+        let pureValue = string.replacingOccurrences(of: "\"", with: "", options: .caseInsensitive, range: nil).replacingOccurrences(of: "(", with: "", options: .caseInsensitive, range: nil).replacingOccurrences(of: ")", with: "", options: .caseInsensitive, range: nil)
+        let array = pureValue.components(separatedBy: ", ")
+        return (Int(array[0])!, Int(array[1])!)
+    }
+    
+    func verificaClick() {
+        for i in 0...(game.count - 1) {
+            for j in 0...(game[i].count - 1) {
+                for jogada in self.jogadas {
+                    if jogada.jogada == decodeTuple(click: game[i][j].tag) {
+                        if idjogador1 == jogada.idJogador {
+                            game[i][j].setTitleColor(.red, for: .normal)
+                            game[i][j].setTitle("X", for: .normal)
+                        }else {
+                            game[i][j].setTitleColor(.blue, for: .normal)
+                            game[i][j].setTitle("O", for: .normal)
                         }
                     }
                 }
@@ -107,11 +144,37 @@ public class GameViewContoller: UIViewController {
         }
     }
     
-    private func stringToDatetime(_ date: String) -> Date? {
+    private func stringToDatetime(data: String) -> Date? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        
-        return formatter.date(from: date)
+        return formatter.date(from: data)
+    }
+    
+    func decodeTuple(click:Int) -> (Int,Int) {
+        var tupla:(Int,Int)
+        switch click {
+        case 0:
+            tupla = (0, 0)
+        case 1:
+            tupla = (0, 1)
+        case 2:
+            tupla = (0, 2)
+        case 3:
+            tupla = (1, 0)
+        case 4:
+            tupla = (1, 1)
+        case 5:
+            tupla = (1, 2)
+        case 6:
+            tupla = (2, 0)
+        case 7:
+            tupla = (2, 1)
+        case 8:
+            tupla = (2, 2)
+        default:
+            tupla = (-1, -1)
+        }
+        return tupla
     }
     
     @objc func buttonClick(sender: UIButton!) {
@@ -124,34 +187,9 @@ public class GameViewContoller: UIViewController {
         var jogada: Dictionary<String,String> = [:]
         var jogada2:Jogada? = nil
         
-        if (title == "X" || title == "O") {
-            return
-        }
+        if (title == "X" || title == "O") { return }
         
-        var tupla:(Int,Int)
-        switch (sender as UIButton).tag {
-            case 0:
-                tupla = (0, 0)
-            case 1:
-                tupla = (0, 1)
-            case 2:
-                tupla = (0, 2)
-            case 3:
-                tupla = (1, 0)
-            case 4:
-                tupla = (1, 1)
-            case 5:
-                tupla = (1, 2)
-            case 6:
-                tupla = (2, 0)
-            case 7:
-                tupla = (2, 1)
-            case 8:
-                tupla = (2, 2)
-            default:
-                tupla = (-1, -1)
-        }
-        //print(tupla)
+        let tupla = decodeTuple(click: (sender as UIButton).tag)
         
         if (play % 2 == 0) {
             sender.setTitleColor(.red, for: .normal)
@@ -160,7 +198,7 @@ public class GameViewContoller: UIViewController {
             self.disableButton()
             self.nomeJogadorVencedor.text = "AGUARDE..."
             jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","id_jogador":"\(self.jogador1)" ]
-            jogada2 = (Jogada(data: date, jogada: tupla, idJogador: self.jogador1))
+            jogada2 = (Jogada(data: currentDate, jogada: tupla, idJogador: self.jogador1))
             let ref = reference.child("salas").child("\(idSala)").child("jogadas").child("\(jogadas.count)")
             ref.setValue(jogada)
         } else {
@@ -170,7 +208,7 @@ public class GameViewContoller: UIViewController {
             self.disableButton()
             self.nomeJogadorVencedor.text = "AGUARDE..."
             jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","id_jogador":"\(self.jogador2)" ]
-            jogada2 = (Jogada(data: date, jogada: tupla, idJogador: self.jogador2))
+            jogada2 = (Jogada(data: currentDate, jogada: tupla, idJogador: self.jogador2))
             let ref = reference.child("salas").child("\(idSala)").child("jogadas").child("\(jogadas.count)")
             ref.setValue(jogada)
         }

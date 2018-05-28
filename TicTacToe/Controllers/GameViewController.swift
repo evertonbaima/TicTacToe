@@ -64,19 +64,12 @@ public class GameViewContoller: UIViewController {
     
     public override func viewDidAppear(_ animated: Bool) {
         atualizaJogada()
-        indentifierPlayer2()
+        verificaUltimaJogada()
     }
     
     override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func indentifierPlayer2() {
-        let emailB64 = EncodeDecodeUtils.encodeBase64(text: (self.auth.currentUser?.email)!)
-        if emailB64 == idjogador2 {
-            self.play = 1
-        }
     }
     
     func atualizaJogada() {
@@ -112,6 +105,37 @@ public class GameViewContoller: UIViewController {
         })
     }
     
+    func verificaUltimaJogada() {
+        let emailB64 = EncodeDecodeUtils.encodeBase64(text: (self.auth.currentUser?.email)!)
+        self.reference.child("/salas/\(idSala)/jogadas").queryLimited(toLast: 1).observe(.value) { (snapshot) in
+            if !snapshot.hasChild("jogadas") {
+                if emailB64 != self.idjogador1 {
+                    self.disableButton()
+                }
+            }
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                let c = child.value as! NSDictionary
+                if self.idjogador1 != c["id_jogador"] as! String {
+                    self.play += 0
+                    self.nomeJogadorVez.text = self.nomeJogador1.text
+                    if emailB64 == self.idjogador2 {
+                        self.disableButton()
+                    }else {
+                        self.enableButton()
+                    }
+                }else {
+                    self.play += 1
+                    self.nomeJogadorVez.text = self.nomeJogador2.text
+                    if emailB64 == self.idjogador1 {
+                        self.disableButton()
+                    }else {
+                        self.enableButton()
+                    }
+                }
+            }
+        }
+    }
+    
     func convertTuple(_ string: String) -> (Int,Int) {
         let pureValue = string.replacingOccurrences(of: "\"", with: "", options: .caseInsensitive, range: nil).replacingOccurrences(of: "(", with: "", options: .caseInsensitive, range: nil).replacingOccurrences(of: ")", with: "", options: .caseInsensitive, range: nil)
         let array = pureValue.components(separatedBy: ", ")
@@ -140,6 +164,14 @@ public class GameViewContoller: UIViewController {
         for i in 0...(game.count - 1) {
             for j in 0...(game[i].count - 1) {
                 game[i][j].isEnabled = false
+            }
+        }
+    }
+    
+    func enableButton() {
+        for i in 0...(game.count - 1) {
+            for j in 0...(game[i].count - 1) {
+                game[i][j].isEnabled = true
             }
         }
     }
@@ -195,7 +227,6 @@ public class GameViewContoller: UIViewController {
             sender.setTitleColor(.red, for: .normal)
             sender.setTitle("X", for: .normal)
             self.nomeJogadorVez.text = self.nomeJogador2.text
-            self.disableButton()
             self.nomeJogadorVencedor.text = "AGUARDE..."
             jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","id_jogador":"\(self.jogador1)" ]
             jogada2 = (Jogada(data: currentDate, jogada: tupla, idJogador: self.jogador1))
@@ -205,7 +236,6 @@ public class GameViewContoller: UIViewController {
             sender.setTitleColor(.blue, for: .normal)
             sender.setTitle("O", for: .normal)
             self.nomeJogadorVez.text = self.nomeJogador1.text
-            self.disableButton()
             self.nomeJogadorVencedor.text = "AGUARDE..."
             jogada = [ "data":"\(currentDate)","jogada":"\(tupla)","id_jogador":"\(self.jogador2)" ]
             jogada2 = (Jogada(data: currentDate, jogada: tupla, idJogador: self.jogador2))
@@ -215,15 +245,15 @@ public class GameViewContoller: UIViewController {
         jogadas.append(jogada2!)
         
         let statusPartida = Game.verificarStatusDeJogo(jogadas)
-        print(statusPartida)
+        //print(statusPartida)
         if statusPartida == "X" {
-            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.jogador1, self)
-            self.nomeJogadorVencedor.text = "\(self.jogador1) WINS"
+            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.nomeJogador1.text!, self)
+            self.nomeJogadorVencedor.text = "\(self.nomeJogador1.text!) WINS"
         }else if statusPartida == "O" {
-            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.jogador2, self)
-            self.nomeJogadorVencedor.text = "\(self.jogador2) WINS"
+            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.nomeJogador2.text!, self)
+            self.nomeJogadorVencedor.text = "\(self.nomeJogador2.text!) WINS"
         }else if statusPartida == "E" {
-            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.jogador1, self)
+            AlertUtils.victoryAlert(status: statusPartida, nomeGanhador: self.nomeJogador1.text!, self)
             self.nomeJogadorVencedor.text = "Empate"
         }
         
